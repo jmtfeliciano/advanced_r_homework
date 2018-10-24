@@ -30,8 +30,12 @@ for(row in 1:nrow(filtered_data)) {
   }
 }
 
+# note to self:  factors tell me the order is 0,1 and want to assign female to 0 and male to 1
 
 
+attributes(filtered_data$GENDER)$labels<-c("Female", "Male")
 
+
+hist(filtered_data$GENDER)
 
                         
