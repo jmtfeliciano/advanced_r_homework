@@ -2,9 +2,10 @@
 # HW 8
 
 # Declares a changeable wd and sets working directory 
-wd<-"/Users/jfeliciano/Documents/advancedr/homework/Assignment8"
+wd<-"/Users/jfeliciano/Documents/biostats/bis679/advanced_r_homework/Assignment8"
 setwd(wd) 
-require(dplyr)
+
+require("dplyr")
 
 # Loads the file required for this homework
 demo_data <- read.csv("Demographics.csv", header = TRUE)
@@ -24,21 +25,23 @@ for(row1 in 1:nrow(test_master)) {
       break # for efficiency, exits out of inner for-loop to proceed to the next column in the original data set 
     }
   }
-}
+}c
 
 # logic:  if testscore is NA, replace with 0.  
-# 
+# dplyr alternative:  
 test_master[is.na(test_master$TestScore),]$TestScore <- 0
 
-# 
 
-# Transforms data from long to wide
-wide_data <- reshape(test_master, timevar="TestNumber", idvar = "StudentID", v.names = "TestScore", direction="wide")
+# Creates 'finaldata' df by assigning the newly wide-formatted dataset 
+finaldata <- reshape(test_master, timevar="TestNumber", idvar = "StudentID", v.names = "TestScore", direction="wide")
 
+# calculates the final grade by 
+finaldata$final_grade <- 0.40*(sum())
 
-sum(wide_data[,2:6],na.rm=TRUE)/5
+finaldata <- finaldata %>%
+  rowwise() %>% 
+  #added rowwise() code to restrict my min() inside mutate() for the current row it's in for variables, 
+  #reason:  min() when inside mutate() would normally find the min for each variable column then compare each column min to each other
+  #so rowwise() prevents complications when using summary statistics or similar methods inside mutate()
+  mutate(final_grade = 0.40*(TestScore.2+TestScore.3+TestScore.4-min(TestScore.2, TestScore.3, TestScore.4))/2+0.30*TestScore.1+0.30*TestScore.5) 
 
-#  
-wide_data <- wide_data %>% mutate(test_avg = mean(cat("TestScore.",1:5,sep="")))
-
-full_data <- merge(demo_data, wide_data, by="StudentID", all= TRUE)
