@@ -35,12 +35,12 @@ test_master[is.na(test_master$TestScore),]$TestScore <- 0
 # Creates 'finaldata' df by assigning the newly wide-formatted dataset 
 finaldata <- reshape(test_master, timevar="TestNumber", idvar = "StudentID", v.names = "TestScore", direction="wide")
 
-# calculates the final grade by 
-finaldata$final_grade <- 0.40*(sum())
+# Merges demo data into wide data
+test <- merge(demo_data, finaldata, by="StudentID", all=TRUE)
 
 finaldata <- finaldata %>%
   rowwise() %>% 
-  #added rowwise() code to restrict my min() inside mutate() for the current row it's in for variables, 
+  #added rowwise() code from dplyr to restrict my min() inside mutate() for the current row it's in for variables, 
   #reason:  min() when inside mutate() would normally find the min for each variable column then compare each column min to each other
   #so rowwise() prevents complications when using summary statistics or similar methods inside mutate()
   mutate(final_grade = 0.40*(TestScore.2+TestScore.3+TestScore.4-min(TestScore.2, TestScore.3, TestScore.4))/2+0.30*TestScore.1+0.30*TestScore.5) 
