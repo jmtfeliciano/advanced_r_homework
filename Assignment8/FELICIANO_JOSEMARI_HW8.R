@@ -55,16 +55,24 @@ for(col in 1:5){
 
 #finds the lowest from tests 2 - 4, then uses that info to calculate the eventual final grade
 finaldata$lowest24 <- apply(finaldata[c("TestScore.2", "TestScore.3", "TestScore.4")], 1, FUN = min) 
-finaldata$FinalGrade <- 0.20*(finaldata$TestScore.2+finaldata$TestScore.3+finaldata$TestScore.4-finaldata$lowest24)+0.30*finaldata$TestScore.1+0.30*finaldata$TestScore.5
+finaldata$FinalGrade <- round(0.20*(finaldata$TestScore.2+finaldata$TestScore.3+finaldata$TestScore.4-finaldata$lowest24)+0.30*finaldata$TestScore.1+0.30*finaldata$TestScore.5,2)
 
 # calculates class average and creates diff 
 finaldata$ClassAverage <- mean(finaldata$FinalGrade)
 finaldata <- finaldata %>% 
-  mutate(ClassAverage = mean(FinalGrade), ClassDiff = FinalGrade - ClassAverage) %>%
+  mutate(ClassAverage = mean(FinalGrade), ClassDiff = round(FinalGrade - ClassAverage,2)) %>%
   group_by(Major) %>%  
-  mutate(MajorAverage = mean(FinalGrade), MajorDiff = FinalGrade-MajorAverage) %>%
+  mutate(MajorAverage = mean(FinalGrade), MajorDiff = round(FinalGrade-MajorAverage,2)) %>%
   group_by(Year) %>%
-  mutate(YearAverage = mean(FinalGrade), YearDiff = FinalGrade-YearAverage) 
+  mutate(YearAverage = mean(FinalGrade), YearDiff = round(FinalGrade-YearAverage,2)) 
 
 # only keeps the variables required for the homework
 finaldata <- select(finaldata, c("StudentID", "Year", "Major", "FinalGrade", "ClassDiff", "YearDiff", "MajorDiff"))
+
+# labels the categorical variables
+finaldata$Year <- factor(finaldata$Year, levels = c(1:5), labels = c("Freshman", "Sophomore", "Junior", "Senior", "Senior Plus"))
+finaldata$Major <- factor(finaldata$Major, levels = c(1:6), labels = c("Chemistry", "Biology", "Mathematics", "Physics", "Psychology", "Other"))
+
+# formats my continous variables to have 2 decimal places
+finaldata$FinalGrade <- format(round(finaldata$FinalGrade, 2), nsmall = 2)
+
