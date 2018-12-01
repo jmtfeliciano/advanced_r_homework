@@ -1,7 +1,6 @@
 
 ###### Josemari Feliciano
 ###### BIS 679
-###### Homework 9
 
 
 
