@@ -43,4 +43,8 @@ for(sim in 1:num_simulation){
 }
 
 
+hist(dem_all_ec, col="blue", main="Overlapping Histogram", xlab="Electoral College Distribution")
+hist(rep_all_ec, col="red", add=T)
+box()
+lines(x=270, lwd=4)
 
