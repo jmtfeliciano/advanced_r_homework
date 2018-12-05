@@ -3,6 +3,42 @@
 
 
 
+######################################################################################################
+
+#Function: election_simulator()
+
+#Author: Josemari Feliciano
+
+#Creation Date: December 1, 2018 (version 3.4.0)
+
+#Purpose: - To print on the console the probabilities of Democrats and Republics winning the US presidency, 
+#                 also prints the probability of having an undecided election given all the simulations
+#         - To plot the distribution of electocal vote distribution for Democrats and Republicans in the same graph using specific method
+
+# Required Parameters: 
+#      - file_location = file path of csv data that will be used for analysis
+#             subrequirements:
+#               for each state, need to include the following variables as columns variables called: 
+#                 - Democrat_Per = % of registered Democrats
+#                 - Republican_Per = % of registered Republicans
+#                 - Other_Per = % of registered voters who do not identify as Dem or Rep
+#                 - Electoral.Votes = number of electoral votes for each state
+#      - seed_num = the seed number that will be set to make output reproducible 
+#      - num_sim = the number of election simulations that will be performed
+#      - method = the method number that will be used to assume how non-Democrats and non-Republicans voters would vote
+#           method = 1: assumes that non-Democrats and non-Republicans voters would vote for a third party
+#           method = 2: assumes that all non-Democrats and non-Republicans voters would only vote for Democrats
+#           method = 3: assumes that all non-Democrats and non-Republicans voters would only vote for Republicans 
+#           method = 4: assumes that all non-Democrats and non-Republicans voters would vote on 50%-50% split between Dems and Reps.  
+
+#Output: No direct return value. 
+#        It will print the following:
+#           - on console, prints the probabilities of Democrats and Republicans outright winning, along with probability of undecided election
+#           - on plot tab, produces a single histogram (overlay) of the distribution of electoral votes for Republicans and Democrats 
+
+#Example: election_simulator(file_location="/Users/jfeliciano/Election_Data.csv", seed_num=1234, num_sim=999, method=1)
+########################################################################################################
+
 
 
 
