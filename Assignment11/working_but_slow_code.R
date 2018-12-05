@@ -17,7 +17,6 @@ num_simulation <- 10000
 seed <- 12345
 
 ptm <- proc.time()
-# Method 1
 
 
 dem_all_ec <- c()
@@ -32,6 +31,7 @@ for(sim in 1:num_simulation){
   
   for(state in 1:nrow(election_data)) {
     current_prob <- rmultinom(1, 1, prob = c(election_data[state,2], election_data[state,3],  election_data[state,4]))
+    
     if(current_prob[1] == 1) {
       dem_ec_tally <- dem_ec_tally + election_data[state,"Electoral.Votes"]
     }else if(current_prob[2] == 1){
@@ -46,15 +46,13 @@ for(sim in 1:num_simulation){
   ind_all_ec <- c(ind_all_ec, ind_ec_tally)
 }
 
-hist(dem_all_ec, col=rgb(0,0,1,0.2), main="Overlapping Simulated Electoral College Win", xlab="Electoral College Distribution")
-hist(rep_all_ec, col=rgb(1,0,0,0.2), add=T)
+hist(dem_all_ec, color="blac", main="Overlapping Simulated Electoral College Win", xlab="Electoral College Distribution")
+hist(rep_all_ec, color="blue", add=T)
 box()
 abline(v = 270, lwd=4, col="yellow")
 
-hist(dem_all_ec2, col=rgb(0,0,1,0.2), main="Overlapping Simulated Electoral College Win", xlab="Electoral College Distribution")
-hist(rep_all_ec2, col=rgb(1,0,0,0.2), add=T)
-box()
-abline(v = 270, lwd=4, col="yellow")
+
+
 
 
 
