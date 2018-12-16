@@ -1,12 +1,18 @@
 # Non-generalized solution to experiment on
 # Trial for one scenario to play with as I write solution for my general function
-
+if(!require("stats")) install.packages("stats") 
+library("stats") 
 
 # current statistics
 medical_practices <- 86
 mean <- 70
 st_dev <- 5
 num_sims <- 1000
+
+all_scenarios <- data.frame(scenario=numeric(4),
+                            average_cv=numeric(4),
+                            cutoff_90=numeric(4),
+                            acceptability=logical(4))
 
 # empty vector of valid simulations
 cv_for_valid_sims <- c()
@@ -23,19 +29,10 @@ while(length(cv_for_valid_sims) < num_sims) {
 # need to check how many simulations have CV < 0.23
 acceptable <- sum(cv_for_valid_sims < 0.23)
 
+# 90% cutoff
+quantile(cv_for_valid_sims, 0.90)
 
 
-acceptable <- 0
-for(i in 1:1000){
-  if(cv_for_valid_sims[i] < 0.23){
-    acceptable <- acceptable + 1
-  }
-}
-
-
-if(acceptable/1000 > 0.90){
-  is
-}
 
 
 

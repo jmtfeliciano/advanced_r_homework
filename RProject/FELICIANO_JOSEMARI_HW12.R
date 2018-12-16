@@ -46,7 +46,31 @@ cluster_randomized_simulator <- function(seed,medical_practices,mean,num_sims,di
     } # end of current scenario loop
     
     
-  } # write else if for dist==2 later
+  }else if(dist==2){
+    
+    min <- sort(min)
+    max <- sort(max, decreasing=TRUE)
+    
+    for(current_scenario in 1:length(min)){ # start of current scenario loop
+      
+      cv_for_valid_sims <- c()
+      
+      while(length(cv_for_valid_sims) < num_sims) {
+        current_participants <- runif(medical_practices,min[current_scenario],max[current_scenario])
+        if(sum(current_participants) >= 6000 && sum(current_participants) <= 6100) {
+          current_cv <- sd(current_participants) / mean(current_participants)
+          cv_for_valid_sims <- c(cv_for_valid_sims, current_cv)
+        }
+      }
+      
+      all_scenarios[current_scenario,1] <- current_scenario
+      all_scenarios[current_scenario,2] <- mean(cv_for_valid_sims)
+      all_scenarios[current_scenario,3] <- quantile(cv_for_valid_sims, 0.90)
+      all_scenarios[current_scenario,4] <- 0.90 <= sum(cv_for_valid_sims < 0.23)/num_sims 
+      
+    } # end of current scenario loop
+    
+  }
   
  
   return(all_scenarios)  
