@@ -5,7 +5,7 @@
 # current statistics
 medical_practices <- 86
 mean <- 70
-st_dev <- 10
+st_dev <- 5
 num_sims <- 1000
 
 # empty vector of valid simulations
@@ -25,14 +25,38 @@ acceptable <- sum(cv_for_valid_sims < 0.23)
 
 
 
+acceptable <- 0
+for(i in 1:1000){
+  if(cv_for_valid_sims[i] < 0.23){
+    acceptable <- acceptable + 1
+  }
+}
+
+
+if(acceptable/1000 > 0.90){
+  is
+}
 
 
 
-# cluster_randomized_simulator <- function(seed,mean,st_dev,min,max){
-#}
 
-# cluster_randomized_simulator(seed=123, mean=70, st_dev=c(5,10,15,20))
-# cluster_randomized_simulator(seed=123, mean=70, min=c(40,45,50), max=c(90,95,100))
+
+
+
+
+cluster_randomized_simulator <- function(seed,medical_practices,mean,num_sims,test,st_dev,min,max){
+  if(!require("stats")) install.packages("stats") 
+  library("stats") 
+  set.seed(seed)
+  
+  if(test==1){
+    
+  }
+  
+}
+
+cluster_randomized_simulator(seed=123, medical_practices=86, mean=70, num_sims=1000, test=1, st_dev=c(5,10,15,20))
+cluster_randomized_simulator(seed=123, medical_practices=86, mean=70, num_sims=1000, test=2, min=c(40,45,50), max=c(90,95,100))
 
 
 
